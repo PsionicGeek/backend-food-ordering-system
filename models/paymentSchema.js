@@ -9,6 +9,8 @@
 //
 //},
 const mongoose = require('mongoose');
+const User = require('./userSchema')
+const Order = require('./orderSchema')
 const Schema= mongoose.Schema({
     payment_id:{
         type:Number,

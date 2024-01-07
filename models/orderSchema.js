@@ -24,6 +24,8 @@
 // },
 
 const mongoose = require('mongoose');
+const User = require('./userSchema')
+const Dish = require('./dishesSchema')
 const Schema= mongoose.Schema({
     status:{
         type:Number,
