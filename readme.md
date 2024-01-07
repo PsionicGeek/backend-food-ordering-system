@@ -1,5 +1,7 @@
 # APIs List for User Side and Admin
 
+## POST APIs
+
 **1. SignUP API for User**
 
 * **URL**  
@@ -150,3 +152,241 @@
      * **Auth Need : False**
     * **Admin Auth Need : True**
 
+**7. Book Order **
+* **URL**
+    `/api/user/bookOrder`
+
+* **METHOD**
+    `POST`
+
+* **PASSED OBJETCS** <br />
+    ` dishID [required],` <br />
+    ` mode_of_eating [required],` <br />
+    ` status [required]` <br />
+    ` user_id [required]` <br />
+    ` qty [required]` <br />
+    ` total [required]` <br />
+
+* **Success Response**<br />
+    * **Code:** `200` <br />
+      **Message:** ` Order created successfully` <br />
+      **data:** `{ orderID: orderID, status: status, createdAT: time }`
+
+* **Error Response**
+    * **Code:** `401` <br />
+      **Message:** `Invalid or missing details` <br />
+
+* **Required Field**
+     * **Auth Need : True**
+    * **Admin Auth Need : False**
+
+
+## GET APIs
+
+### Get APIs for admin
+
+**1. Get All Users**
+* **URL**
+    `/api/admin/allUsers`
+
+* **METHOD**
+    `GET`
+
+`**NOTE**: in the headers you have to authorize token and you can get token by signin API `
+
+
+* **Success Response**<br />
+    * **Code:** `201` <br />
+      **data:** `{ users: [ displaying all users] }`
+
+* **Error Response**
+    * **Code:** `401` <br />
+      **Message:** `authorization required` <br />
+
+* **Required Filed**
+    * **Auth Need : False**
+    * **Admin Auth Need : True**
+
+**2. Get All Categories**
+* **URL**
+    `/api/admin/getCategories`
+
+* **METHOD**
+    `GET`
+
+`**NOTE**: in the headers you have to authorize token and you can get token by signin API `
+
+
+* **Success Response**<br />
+    * **Code:** `201` <br />
+      **data:** `{ users: [ displaying all categories] }`
+
+* **Error Response**
+    * **Code:** `401` <br />
+      **Message:** `authorization required` <br />
+
+* **Required Filed**
+    * **Auth Need : False**
+    * **Admin Auth Need : True**
+
+**3. Get All Dishes**
+* **URL**
+    `/api/admin/getDishes`
+
+* **METHOD**
+    `GET`
+
+`**NOTE**: in the headers you have to authorize token and you can get token by signin API `
+
+
+* **Success Response**<br />
+    * **Code:** `201` <br />
+      **data:** `{ users: [ displaying all Dishes] }`
+
+* **Error Response**
+    * **Code:** `401` <br />
+      **Message:** `authorization required` <br />
+
+* **Required Filed**
+    * **Auth Need : False**
+    * **Admin Auth Need : True**
+
+**4. Get Ongoing Orders (it will be fetch after every 30 seconds)**
+* **URL**
+    `/api/admin/getCurrOrder`
+
+* **METHOD**
+    `GET`
+
+`**NOTE**: in the headers you have to authorize token and you can get token by signin API `
+
+
+* **Success Response**<br />
+    * **Code:** `201` <br />
+      **data:** `{ order: [ displaying ongoing order] }`
+
+* **Error Response**
+    * **Code:** `401` <br />
+      **Message:** `authorization required` <br />
+
+* **Required Filed**
+    * **Auth Need : False**
+    * **Admin Auth Need : True** 
+
+**5. Get All Orders**
+* **URL**
+    `/api/admin/getOrders`
+
+* **METHOD**
+    `GET`
+
+`**NOTE**: in the headers you have to authorize token and you can get token by signin API `
+
+
+* **Success Response**<br />
+    * **Code:** `201` <br />
+      **data:** `{ get: [ displaying all orders] }`
+
+* **Error Response**
+    * **Code:** `401` <br />
+      **Message:** `authorization required` <br />
+
+* **Required Filed**
+    * **Auth Need : False**
+    * **Admin Auth Need : True**
+
+**6. Get Payment**
+* **URL**
+    `/api/admin/getEarning`
+
+* **METHOD**
+    `GET`
+
+`**NOTE**: in the headers you have to authorize token and you can get token by signin API `
+
+
+* **Success Response**<br />
+    * **Code:** `201` <br />
+      **data:** `{ get: [ displaying total earning] }`
+
+* **Error Response**
+    * **Code:** `401` <br />
+      **Message:** `authorization required` <br />
+
+* **Required Filed**
+    * **Auth Need : False**
+    * **Admin Auth Need : True**
+
+### Get APIs for user
+
+**1. Get Dishes**
+* **URL**
+    `/api/user/getDishes`
+
+* **METHOD**
+    `GET`
+
+`**NOTE**: in the headers you have to authorize token and you can get token by signin API `
+
+
+* **Success Response**<br />
+    * **Code:** `201` <br />
+      **data:** `{ get: [ displaying all dishes with category] }`
+
+* **Error Response**
+    * **Code:** `401` <br />
+      **Message:** `authorization required` <br />
+
+* **Required Filed**
+    * **Auth Need : False**
+    * **Admin Auth Need : True**
+
+**2. Get All Orders**
+* **URL**
+    `/api/user/getAllOrders/:id`
+
+* **URL params**
+    `particular user id`
+
+* **METHOD**
+    `GET`
+
+`**NOTE**: in the headers you have to authorize token and you can get token by signin API `
+
+
+* **Success Response**<br />
+    * **Code:** `201` <br />
+      **data:** `{ get: [ displaying all orders] }`
+
+* **Error Response**
+    * **Code:** `401` <br />
+      **Message:** `authorization required` <br />
+
+* **Required Filed**
+    * **Auth Need : False**
+    * **Admin Auth Need : True**
+
+**3. Get Status on particular order**
+* **URL**
+    `/api/user/getStatus/:orderID`
+
+* **URL params**
+    `particular order id`
+
+* **METHOD**
+    `GET`
+
+`**NOTE**: in the headers you have to authorize token and you can get token by signin API `
+
+
+* **Success Response**<br />
+    * **Code:** `201` <br />
+      **data:** `{ get: [ display status on particular order] }`
+
+* **Error Response**
+    * **Code:** `401` <br />
+      **Message:** `authorization required` <br />
+
+* **Required Filed**
+    * **Auth Need : False**
+    * **Admin Auth Need : True**
