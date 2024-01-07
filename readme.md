@@ -1,8 +1,5 @@
 # APIs List for User Side and Admin
 
-> [!TIP]
-> Helpful advice for doing things better or more easily.
-
 **1. SignUP API for User**
 
 * **URL**  
