@@ -7,19 +7,31 @@ const userSchema = new mongoose.Schema({
         required: true,
         unique: true
     },
-    email: {
+    mobileNumber: {
         type: String,
         required: true,
+        unique: true, 
+        validate: {
+          validator: function (value) {
+            return /^\d{10}$/.test(value);
+          },
+          message: props => `${props.value} is not a valid mobile number! Please enter a 10-digit number.`,
+        }
+    },
+    email: {
+        type: String,
         unique : true
     },
     password: {
         type: String,
         required: true,
     },
-    address : {
+    address : [
+        {
         type : String,
         required : true,
-    },
+        }
+    ],
     isAdmin : {
         type : Boolean,
         default : false
