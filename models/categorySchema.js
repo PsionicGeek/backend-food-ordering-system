@@ -1,29 +1,15 @@
-
-//"category": {
-//  "id": 1,
-//  "name": "CategorySchema 1",
-//  "description": "CategorySchema 1 description",
-//  "image": "image.jpg",
-//  "created_at": "2016-11-22T15:28:52.000Z",
-//  "updated_at": "2016-11-22T15:28:52.000Z",
-//  "deleted_at": null
-//
-//
-// },
-
 const mongoose = require('mongoose');
-const Schema= mongoose.Schema({
+const Schema = mongoose.Schema({
     name:{
         type:String,
         required:true
     },
     description:{
         type:String,
-        required:true
+        required : true
     },
     image:{
-        data:Buffer,
-        contentType:String,
+        type : String,
         required:true
     },
     created_at:{
@@ -39,6 +25,5 @@ const Schema= mongoose.Schema({
         default:null
     },
 });
-
-const Category = mongoose.model('CategorySchema',Schema);
+const Category = mongoose.model('Category',Schema);
 module.exports = Category;

@@ -1,13 +1,3 @@
-//"payment": {
-//  "payment_id": 1,
-//  "amount": 10,
-//  "user_id": 1,
-//  "order_id": 1,
-//  "created_at": "2016-11-22T15:28:52.000Z"
-// }
-//
-//
-//},
 const mongoose = require('mongoose');
 const User = require('./userSchema')
 const Order = require('./orderSchema')
