@@ -1,54 +1,30 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
-
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
-var adminRouter = require('./routes/admin');
-
-var app = express();
-//=======================================================================================================================
+const express = require('express')
 const mongoose = require('mongoose')
-const dotenv = require('dotenv')
-dotenv.config({ path: './env' })
-//==========================================================================================================================
-// view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'ejs');
+const app = express()
+const dotenv = require('dotenv');
+const userRouter = require("./routes/user")
+dotenv.config({path : '.env'})
 
-app.use(logger('dev'));
+//=================================================================================
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+const adminRouter = require('./routes/admin')
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
+
+//==================================================================================
+
 app.use('/admin', adminRouter);
+app.use('/user', userRouter);
 
-// catch 404 and forward to error handler
-app.use(function (req, res, next) {
-  next(createError(404));
-});
 
-// error handler
-app.use(function (err, req, res, next) {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
+//=================================================================================
+//CONNECT TO DATABASE
 
-  // render the error page
-  res.status(err.status || 500);
-  res.render('error');
-});
-//====================================================================================================================
-//CONNECTION WITH THE DATABASE
-mongoose.connect(process.env.DB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect( "mongodb://localhost:27017/TastyDB")
   .then(() => { console.log('CONNECTED TO DATABASE :)') })
   .catch((err) => { console.log('CONNECTION TO DATABASE FAILED :(', err) })
 
 
-//==========================================================================================================================
-module.exports = app;
+//===========================================================================
+app.listen(8000, ()=>{
+    console.log('Server Started at port 8000')
+})

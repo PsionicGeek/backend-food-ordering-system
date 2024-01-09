@@ -1,31 +1,6 @@
-//"orders": {
-//      "id": 1,
-//      "status": 1,
-//      "created_at": "2016-11-22T15:28:52.000Z",
-//      "updated_at": "2016-11-22T15:28:52.000Z",
-//      "deleted_at": null,
-//      "user_id": 1,
-//     "total": 10,
-//      "dishes": [
-//        {
-//          "dish_id": 1,
-//          "quantity": 1
-//        }
-//      ]
-//  },
-// "status": {
-//  "1": "pending",
-//  "2": "in progress",
-//  "3": "ready",
-//  "4": "delivered",
-//  "5": "cancelled"
-//
-//
-// },
-
 const mongoose = require('mongoose');
 const User = require('./userSchema')
-const Dish = require('./dishesSchema')
+const Dish = require('./dishSchema')
 const Schema= mongoose.Schema({
     status:{
         type:Number,
