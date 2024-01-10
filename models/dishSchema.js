@@ -30,7 +30,7 @@ const Schema= mongoose.Schema({
         type:Date,
         default:null
     },
-    category_id:{
+    category:{
         type:mongoose.Schema.Types.ObjectId,
         ref:'Category',
         required:true
