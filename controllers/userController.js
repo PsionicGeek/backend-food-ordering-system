@@ -128,19 +128,22 @@ const searchDish = async(req, res)=>{
 const bookOrder = async (req, res) => {
   try {
     const { user_id, dishList } = req.body;
-    //dishList will be an array of dishId's
+    //dishList will be an array of object
+    //each object will contain {id, quantity}
 
     let totalCost = 0;
     const dishes = [] 
-    
-    for (const dishId of dishList)
+    for (const dishObj of  dishList)
     {
+      const dishId = dishObj.id;
+      const dishQuant = dishObj.quantity;
+      
       const foundDish = await Dish.findById(dishId).populate('category')
-      console.log(foundDish)
-      dishes.push(foundDish);
-      totalCost += foundDish.price;
-    }
+      const newDishObj = { dish : foundDish, quantity : dishQuant };
+      dishes.push (newDishObj)
 
+      totalCost += (foundDish.price * dishQuant)
+    }
     const foundUser = await User.findById(user_id)
     
 

@@ -30,8 +30,13 @@ const Schema= mongoose.Schema({
     },
     dishes:[
         {
-            type:mongoose.Schema.Types.ObjectId,
-            ref:'Dish'
+            dish : {
+                type:mongoose.Schema.Types.ObjectId,
+                ref:'Dish'
+            },
+            quantity : {
+                type : Number
+            }
         }
     ]
 });
