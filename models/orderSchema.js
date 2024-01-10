@@ -18,7 +18,7 @@ const Schema= mongoose.Schema({
         type:Date,
         default:null
     },
-    user_id:{
+    user:{
         type:mongoose.Schema.Types.ObjectId,
         ref:'User',
         required:true
@@ -29,7 +29,7 @@ const Schema= mongoose.Schema({
     },
     dishes:[
         {
-        dish_id:{
+        dish:{
             type:mongoose.Schema.Types.ObjectId,
             ref:'Dish',
             required:true

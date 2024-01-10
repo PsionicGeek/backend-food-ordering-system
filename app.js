@@ -4,9 +4,10 @@ const app = express()
 const dotenv = require('dotenv');
 const userRouter = require("./routes/user")
 dotenv.config({path : '.env'})
-
+const cookieParser = require('cookie-parser')
 //=================================================================================
 app.use(express.json());
+app.use(cookieParser())
 const adminRouter = require('./routes/admin')
 
 
@@ -18,8 +19,7 @@ app.use('/user', userRouter);
 
 //=================================================================================
 //CONNECT TO DATABASE
-
-mongoose.connect( "mongodb://localhost:27017/TastyDB")
+mongoose.connect(process.env.DB_URL)
   .then(() => { console.log('CONNECTED TO DATABASE :)') })
   .catch((err) => { console.log('CONNECTION TO DATABASE FAILED :(', err) })
 

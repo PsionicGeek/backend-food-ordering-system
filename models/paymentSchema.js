@@ -10,12 +10,12 @@ const Schema= mongoose.Schema({
         type:Number,
         required:true
     },
-    user_id:{
+    user:{
         type:mongoose.Schema.Types.ObjectId,
         ref:'User',
         required:true
     },
-    order_id:{
+    order:{
         type:mongoose.Schema.Types.ObjectId,
         ref:'Order',
         required:true
