@@ -1,9 +1,8 @@
 const jwt = require("jsonwebtoken");
 
 const isLoggedIn = (req, res, next)=>{
-    
-    const token = req.cookies.token
     try{
+        const token = req.cookies.user.token
         const user = jwt.verify(token, process.env.JWT_SECRET);
         req.user = user;
     }

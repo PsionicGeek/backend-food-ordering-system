@@ -7,11 +7,16 @@ const User = require('../models/userSchema')
 const Payment = require('../models/paymentSchema')
 const Order = require('../models/orderSchema')
 
-const { addDish, addCategory } = require('../controllers/adminController')
+const { addDish, addCategory, getAllUsers, getEarning, getAllCategories, getAllDishes, getAllOrders } = require('../controllers/adminController')
 //===================================================================================================================================
 
 router.post('/addDish', addDish)
 router.post('/addCategory', addCategory)
+router.get('/getUsers', getAllUsers)
+router.get('/getEarning', getEarning)
+router.get('/getCategories', getAllCategories);
+router.get('/getDishes', getAllDishes);
+router.get('/getOrders', getAllOrders)
 
 //========================================================================================================================================
 module.exports = router

@@ -2,6 +2,8 @@ const asyncHandler = require("express-async-handler");
 const User = require("../models/userSchema");
 const jwt = require("jsonwebtoken");
 const bcrypt = require('bcrypt');
+const Dish = require('../models/dishSchema')
+const Order = require('../models/orderSchema')
 
 //===================================================================================================================
 // controllers/authController.js
@@ -90,7 +92,7 @@ const signin= async(req, res) =>{
 };
 //=============================================================================================================================
 //signout 
-const signout = (req, res) => {
+const signout = async(req, res) => {
   try {
     res.clearCookie("user");
     res.status(200).json({msg : 'Signout successful'});
@@ -100,4 +102,76 @@ const signout = (req, res) => {
   }
 }
 //================================================================================================================================
-module.exports  = { signup, signin, signout };
+const getAllOrders = async(req, res)=>{
+  try{
+    const { id } = req.params;
+    const user = await User.findById(id).populate('orders')
+    const orders = user.orders
+    res.status(200).json(orders)
+  }
+  catch(err){
+    res.status(400).json({msg : 'Cannot fetch your orders'})
+  }
+}
+//=============================================================================================================================
+const searchDish = async(req, res)=>{
+  try{
+    const dishName = req.query.name;
+    const foundDish = await Dish.findOne({name : dishName}).populate('category')
+    res.status(200).json(foundDish)
+  }
+  catch(err){
+    res.status(400).json({msg : 'Cannot search'})
+  }
+}
+//==============================================================================================================================
+const bookOrder = async (req, res) => {
+  try {
+    const { user_id, dishList } = req.body;
+    //dishList will be an array of dishId's
+
+    let totalCost = 0;
+    const dishes = [] 
+    
+    for (const dishId of dishList)
+    {
+      const foundDish = await Dish.findById(dishId).populate('category')
+      console.log(foundDish)
+      dishes.push(foundDish);
+      totalCost += foundDish.price;
+    }
+
+    const foundUser = await User.findById(user_id)
+    
+
+    const order = await Order.create({
+      status : 1,
+      user : foundUser,
+      total : totalCost, 
+      dishes 
+    });
+    foundUser.orders.push(order)
+    await foundUser.save()
+
+    res.status(200).json(order);
+
+  } 
+  catch (error) {
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+};
+//=========================================================================================================================
+//getDishes
+const  getDishes = async (req, res) => {
+  try {
+    const dishes = await Dish.find().populate('category');
+    // const categoryId= dishes.category;
+    console.log(dishes);
+    res.json(dishes);
+  } catch (error) {
+    // console.error(error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+};
+//=========================================================================================================================
+module.exports  = { signup, signin, signout, getAllOrders, searchDish, bookOrder, getDishes};
