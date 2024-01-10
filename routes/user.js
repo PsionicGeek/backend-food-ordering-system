@@ -6,17 +6,19 @@ const Dish = require('../models/dishSchema')
 const User = require('../models/userSchema')
 const Payment = require('../models/paymentSchema')
 const Order = require('../models/orderSchema')
-const userController = require('../controllers/userController')
+
+const {signin, signup, signout } = require('../controllers/userController')
+const { isLoggedIn } = require('../middleware')
 //===================================================================================================================================
 
-router.post(
-    "/signup",
-    userController.signup,
-    
-  );
-  
-  router.get("/signin", userController.signin);
+router.post("/signup", signup,);
+router.get("/signin", signin);
+router.post('/signout', signout)
 
+//add "isLoggedIn" like this for authentication for every route that required auth
+router.get('/orders', isLoggedIn, (req, res)=>{
+    res.send('Hello')
+})
 
 //======================================================================================================================================
 module.exports = router
