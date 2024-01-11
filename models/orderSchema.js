@@ -4,7 +4,8 @@ const Dish = require('./dishSchema')
 const Schema= mongoose.Schema({
     status:{
         type:Number,
-        required:true
+        // required: true,
+        default : 1
     },
     created_at:{
         type:Date,
@@ -21,25 +22,23 @@ const Schema= mongoose.Schema({
     user:{
         type:mongoose.Schema.Types.ObjectId,
         ref:'User',
-        required:true
+        // required:true
     },
     total:{
         type:Number,
-        required:true
+        // required:true
     },
     dishes:[
         {
-        dish:{
-            type:mongoose.Schema.Types.ObjectId,
-            ref:'Dish',
-            required:true
-        },
-        quantity:{
-            type:Number,
-            required:true,
-            default:1
+            dish : {
+                type:mongoose.Schema.Types.ObjectId,
+                ref:'Dish'
+            },
+            quantity : {
+                type : Number
+            }
         }
-    }]
+    ]
 });
 
 const Order = mongoose.model('Order',Schema);
