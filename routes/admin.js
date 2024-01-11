@@ -7,7 +7,7 @@ const User = require('../models/userSchema')
 const Payment = require('../models/paymentSchema')
 const Order = require('../models/orderSchema')
 
-const { addDish, addCategory, getAllUsers, getEarning, getAllCategories, getAllDishes, getAllOrders, seedUsers } = require('../controllers/adminController')
+const { addDish, addCategory, getAllUsers, getEarning, getAllCategories, getAllDishes, getAllOrders, seedUsers, seedCategory, seedDish } = require('../controllers/adminController')
 //===================================================================================================================================
 
 router.post('/addDish', addDish)
@@ -20,6 +20,8 @@ router.get('/getOrders', getAllOrders)
 
 //ONE TIME ROUTES
 router.get('/seedUsers', seedUsers)
+router.get('/seedCategory', seedCategory);
+router.get('/seedDish', seedDish);
 
 
 //========================================================================================================================================

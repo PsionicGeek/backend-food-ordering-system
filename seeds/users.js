@@ -3,7 +3,7 @@ module.exports = [
         username: "Mohak Harjani",
         mobileNumber: "1234567890",
         email: "mohakharjani@gmail.com",
-        password: 1234,
+        password: "1234",
         address: [
             "Shalimar Bagh",
             "New Delhi"
@@ -14,7 +14,7 @@ module.exports = [
         username: "Himanshu",
         mobileNumber: "2345678901",
         email: "himanshu@gmail.com",
-        password: 12345,
+        password: "12345",
         address: [
             "Rajouri Garden",
             "New Delhi"
@@ -25,7 +25,7 @@ module.exports = [
         username: "Ravi Singh",
         mobileNumber: "3456789012",
         email: "ravi@gmail.com",
-        password: 123456,
+        password: "123456",
         address: [
             "White House",
             "Lucknow"
@@ -36,7 +36,7 @@ module.exports = [
         username: "Divyanshu",
         mobileNumber: "4567890123",
         email: "divyanshu@gmail.com",
-        password: 123456,
+        password: "123456",
         address: [
             "Moti Bagh",
             "Delhi"
@@ -47,7 +47,7 @@ module.exports = [
         username: "Garima Mittal",
         mobileNumber: "5678901234",
         email: "garima@gmail.com",
-        password: 1234567,
+        password: "1234567",
         address: [
             "Sector 23",
             "Gurugram"
@@ -58,7 +58,7 @@ module.exports = [
         username: "Virat Kohli",
         mobileNumber: "6789012345",
         email: "virat@gmail.com",
-        password: 2345671,
+        password: "2345671",
         address: [
             "Near Ram chole bhature",
             "Delhi"
@@ -68,10 +68,30 @@ module.exports = [
         username: "Rohit Sharma",
         mobileNumber: "7890123456",
         email: "rohit@gmail.com",
-        password: 3456712,
+        password: "3456712",
         address: [
             "Near Vada Pav stall",
             "Mumbai"
         ],
+    // },
+    // {
+    //     username: "Shubman",
+    //     mobileNumber: "7890123445",
+    //     email: "gill@gmail.com",
+    //     password: "123456",
+    //     address: [
+    //         "Jammu",
+    //         "Katra"
+    //     ],
+    // },
+    // {
+    //     username: "Kejriwal",
+    //     mobileNumber: "9835201928",
+    //     email: "kejriwal@gmail.com",
+    //     password: "12345678",
+    //     address: [
+    //         "Tihar Jail",
+    //         "Delhi"
+    //     ],
     }
 ]
