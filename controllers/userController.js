@@ -9,7 +9,7 @@ const Order = require('../models/orderSchema')
 // controllers/authController.js
 const signup = async (req, res) => {
   try {
-    const { username, email, mobileNumber, address, password } = req.body;
+    const { username, email, mobileNumber, address, password, isAdmin = false } = req.body;
 
     // Check if user with the given email or mobile number already exists
     const existingUser = await User.findOne({ $or: [{ email }, { mobileNumber }] });
@@ -18,7 +18,7 @@ const signup = async (req, res) => {
       return res.status(400).json({ message: 'User with this email or mobile number already exists' });
     }
 
-    console.log(username)
+    // console.log(username)
     // Hash the password
     const hashedPassword = await bcrypt.hash(password, 10);
 
@@ -29,6 +29,7 @@ const signup = async (req, res) => {
       mobileNumber,
       address,
       password: hashedPassword, // Save the hashed password
+      isAdmin
     });
 
     // Save the user to the database
