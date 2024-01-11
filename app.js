@@ -18,6 +18,7 @@ app.use('/user', userRouter);
 
 
 //=================================================================================
+
 //CONNECT TO DATABASE
 mongoose.connect(process.env.DB_URL)
   .then(() => { console.log('CONNECTED TO DATABASE :)') })
