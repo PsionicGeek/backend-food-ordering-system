@@ -106,6 +106,30 @@ const getAllOrders = async (req, res) => {
 };
 ///===========================================================================================================================
 
+const deleteUser = async (req, res) =>{
+  try{
+    const {userId} = req.body;
+    const result = await User.deleteOne({id: userId});
+    res.status(201).json({message:"Successfully deleted", result});
+  }
+  catch(error){
+    res.status(500).json({error: 'Internal Server Error'});
+  }
+
+}
+
+const changeStatus = async (req, res) =>{
+  try{
+    const {orderId, status} = req.params;
+    const order = await Order.findById(orderId);
+    order.status = status;
+    await order.save()
+    res.status(201).json(order);
+  } catch(error){
+    res.status(500).json({error: 'Bdi Dukkad bat hai'});
+  }
+}
+
 
 //ONE TIME CONTROLLERS
 const seedUsers = async(req, res)=>{
@@ -134,4 +158,7 @@ const seedDish = async(req, res)=>{
 
 
 //=======================================================================================================================================
-module.exports = { addDish, addCategory, getAllUsers, getEarning, getAllCategories, getAllDishes, getAllOrders, seedUsers, seedCategory, seedDish }
+module.exports = { addDish, addCategory, getAllUsers, 
+                getEarning, getAllCategories, getAllDishes, 
+                getAllOrders, seedUsers, seedCategory, 
+                seedDish, deleteUser, changeStatus }

@@ -93,15 +93,15 @@ const signin= async(req, res) =>{
 };
 //=============================================================================================================================
 //signout 
-const signout = async(req, res) => {
-  try {
-    res.clearCookie("user");
-    res.status(200).json({msg : 'Signout successful'});
-  }
-  catch (err){
-    res.status(400).json({msg : 'Signout not possible'})
-  }
-}
+// const signout = async(req, res) => {
+//   try {
+//     res.clearCookie("user");
+//     res.status(200).json({msg : 'Signout successful'});
+//   }
+//   catch (err){
+//     res.status(400).json({msg : 'Signout not possible'})
+//   }
+// }
 //================================================================================================================================
 const getAllOrders = async(req, res)=>{
   try{
@@ -178,4 +178,23 @@ const  getDishes = async (req, res) => {
   }
 };
 //=========================================================================================================================
-module.exports  = { signup, signin, signout, getAllOrders, searchDish, bookOrder, getDishes};
+
+//update API
+// const updateUser = async(req, res) => {
+//   try{
+//     const {userId} = req.params;
+//     const{username, address, password} = req.body;
+//     const user = await User.findById(userId);
+//     user.username=username;
+//     user.address=address;
+//     user.password=password;
+//     await user.save();
+//     res.status(201).json(user)
+//   } catch(error){
+//     console.log(error);
+//     res.status(500).json({error:'Internal Server Error'});
+//   }
+ 
+// }
+
+module.exports  = { signup, signin, getAllOrders, searchDish, bookOrder, getDishes};

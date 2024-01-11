@@ -7,7 +7,7 @@ const User = require('../models/userSchema')
 const Payment = require('../models/paymentSchema')
 const Order = require('../models/orderSchema')
 
-const { addDish, addCategory, getAllUsers, getEarning, getAllCategories, getAllDishes, getAllOrders, seedUsers, seedCategory, seedDish } = require('../controllers/adminController')
+const { addDish, addCategory, getAllUsers, getEarning, getAllCategories, getAllDishes, getAllOrders, seedUsers, seedCategory, seedDish, deleteUser, changeStatus } = require('../controllers/adminController')
 //===================================================================================================================================
 
 router.post('/addDish', addDish)
@@ -23,6 +23,12 @@ router.get('/seedUsers', seedUsers)
 router.get('/seedCategory', seedCategory);
 router.get('/seedDish', seedDish);
 
+//DELETE Routes
+router.delete('/deleteUser', deleteUser);
+
+
+//Update Routes
+router.put('/updateStatus/:orderId/:status', changeStatus)
 
 //========================================================================================================================================
 module.exports = router
