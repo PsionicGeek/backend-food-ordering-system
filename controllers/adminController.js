@@ -95,12 +95,12 @@ const getAllDishes = async (req, res) => {
 //================================================================================================================================
 const getAllOrders = async (req, res) => {
   try {
-      const orders = await Order.find({}).populate('dishes');
-     
+      const orders = await Order.find({}).populate({path : 'dishes.dish', model : 'Dish'})
       res.status(201).json(orders);
   } 
   catch (error) 
   {
+    console.log(error)
     res.status(500).json({ error: 'Internal Server Error' });
   }
 };
