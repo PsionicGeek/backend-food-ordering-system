@@ -118,6 +118,39 @@ const deleteUser = async (req, res) =>{
 
 }
 
+const deleteDish = async (req, res) => {
+  try{
+    const {dishId} = req.params;
+    if(await Dish.findById(dishId)){
+      const result = await Dish.deleteOne({id:dishId});
+      res.status(200).json({message:"Dish Successfully Deleted", result});
+    } else {
+      res.status(400).json({message:"Dish Id not found"});
+    }
+    
+  } catch(error){
+    console.log(error);
+    res.status(500).json({message:"Internal Server Error"});
+  }
+}
+// function deleteDishAfterCategory(id){
+//   const 
+// }
+const deleteCategory = async(req, res) => {
+  try{
+    const {categoryId} = req.params;
+    if(await Category.findById(categoryId)){
+      const deletedCat = await Category.deleteOne({id: categoryId});
+    res.status(200).json({message:"Category Successfully Deleted", deletedCat});
+    }
+    else{
+      res.status(400).json({message:"Category Id not found"});
+    }
+  } catch(error){
+    rres.status(500).json({message:"Internal Server Error"});
+  }
+}
+
 const changeStatus = async (req, res) =>{
   try{
     const {orderId, status} = req.params;
@@ -161,4 +194,5 @@ const seedDish = async(req, res)=>{
 module.exports = { addDish, addCategory, getAllUsers, 
                 getEarning, getAllCategories, getAllDishes, 
                 getAllOrders, seedUsers, seedCategory, 
-                seedDish, deleteUser, changeStatus }
+                seedDish, deleteUser, changeStatus, deleteDish,
+                deleteCategory }
