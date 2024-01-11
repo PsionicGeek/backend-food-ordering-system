@@ -7,7 +7,7 @@ const User = require('../models/userSchema')
 const Payment = require('../models/paymentSchema')
 const Order = require('../models/orderSchema')
 
-const { addDish, addCategory, getAllUsers, getEarning, getAllCategories, getAllDishes, getAllOrders, seedUsers, seedCategory, seedDish, deleteUser, changeStatus } = require('../controllers/adminController')
+const { addDish, addCategory, getAllUsers, getEarning, getAllCategories, getAllDishes, getAllOrders, seedUsers, seedCategory, seedDish, deleteUser, changeStatus, deleteDish, deleteCategory } = require('../controllers/adminController')
 //===================================================================================================================================
 
 router.post('/addDish', addDish)
@@ -25,6 +25,8 @@ router.get('/seedDish', seedDish);
 
 //DELETE Routes
 router.delete('/deleteUser', deleteUser);
+router.delete('/deleteDish/:dishId', deleteDish);
+router.delete('/deleteCategory/:categoryId', deleteCategory);
 
 
 //Update Routes
