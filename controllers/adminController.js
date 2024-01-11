@@ -2,7 +2,8 @@ const Category = require('../models/categorySchema')
 const Dish = require('../models/dishSchema');
 const User = require('../models/userSchema');
 const Order = require('../models/orderSchema')
-
+//=======================================================================================================================
+const userList = require('../seeds/users')
 //=============================================================================================================================
 const addDish = async(req, res)=>{
     const dishObject  = req.body; //the passed category name must exist
@@ -100,4 +101,16 @@ const getAllOrders = async (req, res) => {
   }
 };
 ///===========================================================================================================================
-module.exports = { addDish, addCategory, getAllUsers, getEarning, getAllCategories, getAllDishes, getAllOrders }
+
+
+//ONE TIME CONTROLLERS
+const seedUsers = async(req, res)=>{
+    await User.insertMany(userList)
+    res.status(200).json({msg : 'Added all users successfully'})
+}
+
+
+
+
+//=======================================================================================================================================
+module.exports = { addDish, addCategory, getAllUsers, getEarning, getAllCategories, getAllDishes, getAllOrders, seedUsers }
