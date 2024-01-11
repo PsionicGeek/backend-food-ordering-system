@@ -137,10 +137,11 @@ const bookOrder = async (req, res) => {
     for (const dishObj of  dishList)
     {
       const dishId = dishObj.id;
+      const dishName = dishObj.dishName
       const dishQuant = dishObj.quantity;
       
-      const foundDish = await Dish.findById(dishId).populate('category')
-      const newDishObj = { dish : foundDish, quantity : dishQuant };
+      const foundDish = await Dish.findById(dishId).populate('category');
+      const newDishObj = { dish : foundDish, dishName: dishName, quantity : dishQuant };
       dishes.push (newDishObj)
 
       totalCost += (foundDish.price * dishQuant)

@@ -34,6 +34,10 @@ const Schema= mongoose.Schema({
                 type:mongoose.Schema.Types.ObjectId,
                 ref:'Dish'
             },
+            dishName:{
+                type:String,
+                required: true
+            },
             quantity : {
                 type : Number
             }
