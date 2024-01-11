@@ -2,8 +2,11 @@ const Category = require('../models/categorySchema')
 const Dish = require('../models/dishSchema');
 const User = require('../models/userSchema');
 const Order = require('../models/orderSchema')
+const bcrypt = require('bcrypt');
 //=======================================================================================================================
 const userList = require('../seeds/users')
+const categoryList = require("../seeds/categories");
+const dishList = require("../seeds/dish");
 //=============================================================================================================================
 const addDish = async(req, res)=>{
     const dishObject  = req.body; //the passed category name must exist
@@ -92,7 +95,8 @@ const getAllDishes = async (req, res) => {
 //================================================================================================================================
 const getAllOrders = async (req, res) => {
   try {
-      const orders = await Order.find({}).populate('dishes')
+      const orders = await Order.find({}).populate('dishes');
+     
       res.status(201).json(orders);
   } 
   catch (error) 
@@ -105,12 +109,29 @@ const getAllOrders = async (req, res) => {
 
 //ONE TIME CONTROLLERS
 const seedUsers = async(req, res)=>{
+  let newUserList = [];
+  for (user of userList){
+    const hashedPassword = await bcrypt.hash(user.password, 10);
+    user.password=hashedPassword;
+    newUserList.push(user);
+  }
     await User.insertMany(userList)
     res.status(200).json({msg : 'Added all users successfully'})
+}
+
+const seedCategory = async(req, res)=>{
+  await Category.insertMany(categoryList)
+  res.status(200).json({msg : 'Added all categories successfully'})
+}
+
+const seedDish = async(req, res)=>{
+  await Dish.insertMany(dishList)
+  res.status(200).json({msg : 'Added all Dishes successfully'})
 }
 
 
 
 
+
 //=======================================================================================================================================
-module.exports = { addDish, addCategory, getAllUsers, getEarning, getAllCategories, getAllDishes, getAllOrders, seedUsers }
+module.exports = { addDish, addCategory, getAllUsers, getEarning, getAllCategories, getAllDishes, getAllOrders, seedUsers, seedCategory, seedDish }
