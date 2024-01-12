@@ -110,7 +110,7 @@ const deleteDish = async (req, res) => {
   try{
     const {dishId} = req.params;
     if(await Dish.findById(dishId)){
-      const result = await Dish.deleteOne({id:dishId});
+      const result = await Dish.deleteOne({_id:dishId});
       res.status(200).json({message:"Dish Successfully Deleted", result});
     } else {
       res.status(400).json({message:"Dish Id not found"});
