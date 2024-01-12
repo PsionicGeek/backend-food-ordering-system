@@ -1,12 +1,13 @@
 const asyncHandler = require("express-async-handler");
-const User = require("../models/userSchema");
 const jwt = require("jsonwebtoken");
 const bcrypt = require('bcrypt');
 const Dish = require('../models/dishSchema')
 const Order = require('../models/orderSchema')
 
-//===================================================================================================================
-// controllers/authController.js
+const User = require("../models/userSchema");
+const Category = require('../models/categorySchema')
+
+//=====================================================================================================================================
 const signup = async (req, res) => {
   try {
     const { username, email, mobileNumber, address, password, isAdmin = false } = req.body;
@@ -18,7 +19,6 @@ const signup = async (req, res) => {
       return res.status(400).json({ message: 'User with this email or mobile number already exists' });
     }
 
-    // console.log(username)
     // Hash the password
     const hashedPassword = await bcrypt.hash(password, 10);
 
@@ -41,7 +41,7 @@ const signup = async (req, res) => {
     res.status(500).json({ message: 'Internal Server Error' });
   }
 };
-//==============================================================================================================
+//=====================================================================================================================================
 //sign in
 const getToken = (user) => {
   const token = jwt.sign(
@@ -76,7 +76,8 @@ const signin= async(req, res) =>{
     }
 
     const options =  {
-    expires: new Date(Date.now() + (7 * 24 * 60 * 60 * 1000)),       //Date.now() gives date in "ms"...we need to keep cookie in browser for 1 week
+    expires: new Date(Date.now() + (7 * 24 * 60 * 60 * 1000)),       
+    //Date.now() gives date in "ms"...we need to keep cookie in browser for 1 week
     //we need to add 1 week [in ms] to the current date
     httpOnly : true
   
@@ -91,7 +92,8 @@ const signin= async(req, res) =>{
   else
     res.status(400).json({msg : 'User not registered'})
 };
-//=============================================================================================================================
+//===========================================================================================================================================
+//this will be implemented at frontend
 //signout 
 // const signout = async(req, res) => {
 //   try {
@@ -102,7 +104,7 @@ const signin= async(req, res) =>{
 //     res.status(400).json({msg : 'Signout not possible'})
 //   }
 // }
-//================================================================================================================================
+//============================================================================================================================================
 const getAllOrders = async(req, res)=>{
   try{
     const { id } = req.params;
@@ -114,7 +116,7 @@ const getAllOrders = async(req, res)=>{
     res.status(400).json({msg : 'Cannot fetch your orders'})
   }
 }
-//=============================================================================================================================
+//===========================================================================================================================================
 const searchDish = async(req, res)=>{
   try{
     const dishName = req.query.name;
@@ -125,7 +127,7 @@ const searchDish = async(req, res)=>{
     res.status(400).json({msg : 'Cannot search'})
   }
 }
-//==============================================================================================================================
+//==========================================================================================================================================
 const bookOrder = async (req, res) => {
   try {
     const { user_id, dishList } = req.body;
@@ -165,21 +167,58 @@ const bookOrder = async (req, res) => {
     res.status(500).json({ error: 'Internal Server Error' });
   }
 };
-//=========================================================================================================================
-//getDishes
+//===================================================================================================================================================
 const  getDishes = async (req, res) => {
   try {
     const dishes = await Dish.find().populate('category');
-    // const categoryId= dishes.category;
     console.log(dishes);
     res.json(dishes);
   } catch (error) {
-    // console.error(error);
     res.status(500).json({ error: 'Internal Server Error' });
   }
 };
-//=========================================================================================================================
-
+//=======================================================================================================================================
+const getUserDetails = async(req, res)=>{
+  try{
+    const { userId } = req.params;
+    const foundUser = await User.findById(userId).populate({path : 'orders' , populate : { path : 'dishes.dish', model : 'Dish'}})
+    res.status(200).json(foundUser);
+  }
+  catch (error) {
+      // console.error(error);
+      res.status(500).json({ error: 'Internal Server Error' });
+  }
+}
+//========================================================================================================================================
+const getCategories = async(req, res)=>{
+  try {
+    const categories = await Category.find();
+    res.status(201).json( categories);
+} catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal Server Error' });
+}
+}
+//=======================================================================================================================================
+const getCategoryDishes = async (req, res)=>{
+  try{
+    const { id : categoryId } = req.params;
+    const allDishes = await Dish.find().populate('category')
+    let dishes = []
+    for (let dish of allDishes)
+    {
+      if (dish.category.id == categoryId)
+        dishes.push(dish)
+    }
+    res.status(200).json(dishes)
+  }
+  catch(err)
+  {
+    console.error(error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+}
+//=================================================================================================================
 //update API
 // const updateUser = async(req, res) => {
 //   try{
@@ -197,5 +236,5 @@ const  getDishes = async (req, res) => {
 //   }
  
 // }
-
-module.exports  = { signup, signin, getAllOrders, searchDish, bookOrder, getDishes};
+//===================================================================================================================================
+module.exports  = { signup, signin, getAllOrders, searchDish, bookOrder, getDishes, getUserDetails, getCategories, getCategoryDishes};
