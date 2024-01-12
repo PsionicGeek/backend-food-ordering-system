@@ -36,7 +36,7 @@ const Schema= mongoose.Schema({
             },
             dishName:{
                 type:String,
-                required: true
+
             },
             quantity : {
                 type : Number

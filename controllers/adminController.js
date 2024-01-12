@@ -10,17 +10,17 @@ const dishList = require("../seeds/dish");
 //==========================================================================================================================================
 const addDish = async(req, res)=>{
     const dishObject  = req.body;
-  
+
     const category_name = dishObject.category_name;
     delete dishObject.category_name
-  
+
     const foundCategory = await Category.findOne({name : category_name})
     if (foundCategory == null)
        res.status(401).json({msg : 'Category not found'})
     dishObject.category = foundCategory;
-  
+
     const newDish = await Dish.create(dishObject);
-  
+
     if (newDish)
       res.status(200).json(newDish)
     else
@@ -53,7 +53,7 @@ const getEarning = async(req, res)=>{
     let totalPrice = 0;
     for (let i = 0; i < allOrders.length; i++)
        totalPrice  += allOrders[i].total;
-    
+
     res.status(200).json({totalEarning : totalPrice})
 
   }
@@ -77,7 +77,7 @@ const getAllDishes = async (req, res) => {
   try {
       const dishes = await Dish.find({}).populate('category')
       res.status(201).json( dishes );
-  } 
+  }
   catch (error) {
       res.status(500).json({ error: 'Internal Server Error' });
   }
@@ -87,8 +87,8 @@ const getAllOrders = async (req, res) => {
   try {
       const orders = await Order.find({}).populate({path : 'dishes.dish', model : 'Dish'})
       res.status(201).json(orders);
-  } 
-  catch (error) 
+  }
+  catch (error)
   {
     console.log(error)
     res.status(500).json({ error: 'Internal Server Error' });
@@ -115,7 +115,7 @@ const deleteDish = async (req, res) => {
     } else {
       res.status(400).json({message:"Dish Id not found"});
     }
-    
+
   } catch(error){
     console.log(error);
     res.status(500).json({message:"Internal Server Error"});
@@ -139,8 +139,11 @@ const deleteCategory = async(req, res) => {
 //==============================================================================================================================================
 const changeStatus = async (req, res) =>{
   try{
+
     const {orderId, status} = req.params;
+    console.log(orderId, status)
     const order = await Order.findById(orderId);
+
     order.status = status;
     await order.save()
     res.status(201).json(order);
@@ -182,8 +185,8 @@ const seedDish = async(req, res)=>{
   res.status(200).json({msg : 'Added all Dishes successfully'})
 }
 //=======================================================================================================================================
-module.exports = { addDish, addCategory, getAllUsers, 
-                getEarning, getAllCategories, getAllDishes, 
-                getAllOrders, seedUsers, seedCategory, 
+module.exports = { addDish, addCategory, getAllUsers,
+                getEarning, getAllCategories, getAllDishes,
+                getAllOrders, seedUsers, seedCategory,
                 seedDish, deleteUser, changeStatus, deleteDish,
                 deleteCategory, getUserDetails}

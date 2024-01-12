@@ -1,16 +1,15 @@
 const mongoose = require('mongoose');
 const Order = require('./orderSchema.js')
 //==============================================================================
-const userSchema = new mongoose.Schema({       
+const userSchema = new mongoose.Schema({
     username: {
         type: String,
         required: true,
-        unique: true
     },
     mobileNumber: {
         type: String,
         required: true,
-        unique: true, 
+
         validate: {
           validator: function (value) {
             return /^\d{10}$/.test(value);
@@ -39,10 +38,10 @@ const userSchema = new mongoose.Schema({
     orders : [
         {
             type : mongoose.Schema.Types.ObjectId,
-            ref : 'Order'   
+            ref : 'Order'
        }
     ]
 })
 //===================================================================================
-const User = mongoose.model('user', userSchema)                          
-module.exports = User                
+const User = mongoose.model('user', userSchema)
+module.exports = User

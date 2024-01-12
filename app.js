@@ -5,7 +5,6 @@ const dotenv = require('dotenv');
 const userRouter = require("./routes/user")
 dotenv.config({path : '.env'})
 const cookieParser = require('cookie-parser')
-//=================================================================================
 const cors=require("cors");
 const corsOptions ={
     origin:'*',
@@ -14,6 +13,8 @@ const corsOptions ={
 }
 
 app.use(cors(corsOptions))
+//=================================================================================
+
 app.use(express.json());
 app.use(cookieParser())
 const adminRouter = require('./routes/admin')
@@ -36,5 +37,5 @@ mongoose.connect(process.env.DB_URL)
 
 //===========================================================================
 app.listen(8000, ()=>{
-    console.log('Server Started at port 8000')
+    console.log('Server Started at port 8008')
 })

@@ -13,8 +13,8 @@ const signup = async (req, res) => {
     const { username, email, mobileNumber, address, password, isAdmin = false } = req.body;
 
     // Check if user with the given email or mobile number already exists
-    const existingUser = await User.findOne({ $or: [{ email }, { mobileNumber }] });
-
+    const existingUser = await User.findOne({ $or: [{ email }] });
+    console.log(existingUser)
     if (existingUser) {
       return res.status(400).json({ message: 'User with this email or mobile number already exists' });
     }
@@ -31,7 +31,7 @@ const signup = async (req, res) => {
       password: hashedPassword, // Save the hashed password
       isAdmin
     });
-
+    console.log(newUser)
     // Save the user to the database
     await newUser.save();
 
@@ -62,8 +62,8 @@ const signin= async(req, res) =>{
   const userObject = req.body;
   const { email, password } =  userObject
   const foundUser = await User.findOne({ email });
-  
-  if (foundUser && (await bcrypt.compare(password, foundUser.password))) 
+
+  if (foundUser && (await bcrypt.compare(password, foundUser.password)))
   {
     const token = getToken(foundUser);
     const responseObj = {
@@ -72,15 +72,16 @@ const signin= async(req, res) =>{
       name: foundUser.name,
       address: foundUser.address,
       isAdmin: foundUser.isAdmin,
+      username:foundUser.username,
       token,
     }
 
     const options =  {
-    expires: new Date(Date.now() + (7 * 24 * 60 * 60 * 1000)),       
+    expires: new Date(Date.now() + (7 * 24 * 60 * 60 * 1000)),
     //Date.now() gives date in "ms"...we need to keep cookie in browser for 1 week
     //we need to add 1 week [in ms] to the current date
     httpOnly : true
-  
+
    }
    const userObj = {
     token : token,
@@ -94,7 +95,7 @@ const signin= async(req, res) =>{
 };
 //===========================================================================================================================================
 //this will be implemented at frontend
-//signout 
+//signout
 // const signout = async(req, res) => {
 //   try {
 //     res.clearCookie("user");
@@ -135,13 +136,13 @@ const bookOrder = async (req, res) => {
     //each object will contain {id, quantity}
 
     let totalCost = 0;
-    const dishes = [] 
+    const dishes = []
     for (const dishObj of  dishList)
     {
       const dishId = dishObj.id;
       const dishName = dishObj.dishName
       const dishQuant = dishObj.quantity;
-      
+
       const foundDish = await Dish.findById(dishId).populate('category');
       const newDishObj = { dish : foundDish, dishName: dishName, quantity : dishQuant };
       dishes.push (newDishObj)
@@ -149,20 +150,20 @@ const bookOrder = async (req, res) => {
       totalCost += (foundDish.price * dishQuant)
     }
     const foundUser = await User.findById(user_id)
-    
+
 
     const order = await Order.create({
       status : 1,
       user : foundUser,
-      total : totalCost, 
-      dishes 
+      total : totalCost,
+      dishes
     });
     foundUser.orders.push(order)
     await foundUser.save()
 
     res.status(200).json(order);
 
-  } 
+  }
   catch (error) {
     res.status(500).json({ error: 'Internal Server Error' });
   }
@@ -234,7 +235,7 @@ const getCategoryDishes = async (req, res)=>{
 //     console.log(error);
 //     res.status(500).json({error:'Internal Server Error'});
 //   }
- 
+
 // }
 //===================================================================================================================================
 module.exports  = { signup, signin, getAllOrders, searchDish, bookOrder, getDishes, getUserDetails, getCategories, getCategoryDishes};
